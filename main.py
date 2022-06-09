@@ -2,6 +2,7 @@ from tkinter import *
 from turtle import left
 import settings
 from utils import *
+from cell import Cell
 
 root = Tk()
 
@@ -22,6 +23,11 @@ left_frame.place(x=0, y=height_pct(25))
 # Center frame
 center_frame = Frame(root, bg="grey10", width=width_pct(75), height=height_pct(75))
 center_frame.place(x=width_pct(25), y=height_pct(25))
+
+# Cells to click on
+c1 = Cell()
+c1.create_btn_object(center_frame)
+c1.cell_btn_object.place(x=0, y=0)
 
 # Run the game window
 root.mainloop()
