@@ -24,18 +24,9 @@ left_frame.place(x=0, y=height_pct(25))
 center_frame = Frame(root, bg="grey10", width=width_pct(75), height=height_pct(75))
 center_frame.place(x=width_pct(25), y=height_pct(25))
 
-# Cells to click on - sample only
-# c1 = Cell()
-# c1.create_btn_object(center_frame)
-# c1.cell_btn_object.grid(column=0, row=0)
-
-# c2 = Cell()
-# c2.create_btn_object(center_frame)
-# c2.cell_btn_object.grid(column=20, row=0)
-
 # Populate basic grid
-for x in range(5):
-  for y in range(5):
+for x in range(settings.GRID_SIZE):
+  for y in range(settings.GRID_SIZE):
     c = Cell()
     c.create_btn_object(center_frame)
     c.cell_btn_object.grid(column=x, row=y)

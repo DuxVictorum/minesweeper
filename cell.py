@@ -6,5 +6,15 @@ class Cell:
     self.cell_btn_object = None
 
   def create_btn_object(self, location):
-    btn = Button(location, text='???')
+    btn = Button(location, text='Click')
+    btn.bind('<Button-1>', self.left_click_actions)
+    btn.bind('<Button-3>', self.right_click_actions)
     self.cell_btn_object = btn
+
+  def left_click_actions(self, event):
+    print(event)
+    print("I was left-clicked!")
+
+  def right_click_actions(self, event):
+    print(event)
+    print("Righty tighties!")
