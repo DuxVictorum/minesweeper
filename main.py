@@ -27,10 +27,11 @@ center_frame.place(x=width_pct(25), y=height_pct(25))
 # Populate basic grid
 for x in range(settings.GRID_SIZE):
   for y in range(settings.GRID_SIZE):
-    c = Cell()
+    c = Cell(x, y)
     c.create_btn_object(center_frame)
     c.cell_btn_object.grid(column=x, row=y)
 
+print(Cell.all)
 
 # Run the game window
 root.mainloop()
