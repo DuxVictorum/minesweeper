@@ -1,4 +1,6 @@
 from tkinter import Button
+import random
+import settings
 
 class Cell:
   all = []
@@ -13,7 +15,7 @@ class Cell:
     Cell.all.append(self)
 
   def create_btn_object(self, location):
-    btn = Button(location, width=10, height=4, text=f"{self.x},{self.y}")
+    btn = Button(location, width=8, height=3, text="M")
     btn.bind('<Button-1>', self.left_click_actions)
     btn.bind('<Button-3>', self.right_click_actions)
     self.cell_btn_object = btn
@@ -29,7 +31,9 @@ class Cell:
   # Seed the mines
   @staticmethod
   def randomize_mines():
-    pass
+    mined_cells = random.sample(Cell.all, MINES_COUNT)
+    for mine in mined_cells:
+      mine.is_mine = True
 
   def __repr__(self):
     return f"Cell({self.x}, {self.y})"
