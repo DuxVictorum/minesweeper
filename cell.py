@@ -24,16 +24,50 @@ class Cell:
     if self.is_mine:
       self.show_mine()
     else:
+      if self.surrounding_cells_mines == 0:
+        for cell_obj in self.surrounding_cells:
+          cell_obj.show_cell()
       self.show_cell()
+
+  def get_cell_by_axis(self, x, y):
+  # return a cell object based on its x and y values
+    for cell in Cell.all:
+      if cell.x == x and cell.y == y:
+        return cell
+
+  @property
+  def surrounding_cells(self):
+    neighbor_cells = [
+      self.get_cell_by_axis(self.x-1, self.y-1),
+      self.get_cell_by_axis(self.x-1, self.y),
+      self.get_cell_by_axis(self.x-1, self.y+1),
+      self.get_cell_by_axis(self.x, self.y-1),
+      self.get_cell_by_axis(self.x, self.y+1),
+      self.get_cell_by_axis(self.x+1, self.y-1),
+      self.get_cell_by_axis(self.x+1, self.y),
+      self.get_cell_by_axis(self.x+1, self.y+1)
+    ]
+    # Remove cells off the map
+    neighbor_cells = [cell for cell in neighbor_cells if cell is not None]
+    return neighbor_cells
+
+  @property
+  def surrounding_cells_mines(self):
+    counter = 0
+    for cell in self.surrounding_cells:
+      if cell.is_mine:
+        counter += 1
+    return counter
 
   def show_mine(self):
     # Interrupt game and display "You Lost" message
     self.cell_btn_object.configure(bg='red', text='Boom!')
 
   def show_cell(self):
-    pass
+    self.cell_btn_object.configure(text=self.surrounding_cells_mines)
 
-def right_click_actions(self, event):
+
+  def right_click_actions(self, event):
     if self.is_mine:
       self.show_mine()
 
