@@ -4,6 +4,7 @@ import settings
 
 class Cell:
   all = []
+  cell_count = settings.CELL_COUNT
   cell_count_label_object = None
   
   def __init__(self, x, y, is_mine=False):
@@ -73,7 +74,9 @@ class Cell:
     self.cell_btn_object.configure(bg='red', text='Boom!')
 
   def show_cell(self):
+    Cell.cell_count -= 1
     self.cell_btn_object.configure(text=self.surrounding_cells_mines)
+    # Replace the text of 'cell count' label with the updated count
 
 
   def right_click_actions(self, event):
