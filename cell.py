@@ -11,6 +11,7 @@ class Cell:
     self.is_mine = is_mine
     self.x = x
     self.y = y
+    self.is_already_opened = False
     self.cell_btn_object = None
 
     # Append the object to the Cell.all list
@@ -26,7 +27,7 @@ class Cell:
   def create_cell_count_label(location):
     cell_count_label = Label(
       location, bg='grey10', fg='white',
-      text=f"Cells Left: {settings.CELL_COUNT}",
+      text=f"Cells Left: {Cell.cell_count}",
       font=("", 30), width=12, height=4)
     Cell.cell_count_label_object = cell_count_label
 
@@ -69,15 +70,25 @@ class Cell:
         counter += 1
     return counter
 
+  def show_cell(self):
+    # Replace the text of 'cell count' label with the updated count
+    if not self.is_already_opened:
+      Cell.cell_count -= 1
+      self.cell_btn_object.configure(text=self.surrounding_cells_mines)
+      if Cell.cell_count_label_object:
+        Cell.cell_count_label_object.configure(text=f"Cells Left: {Cell.cell_count}")
+      # Mark the cell as opened
+      self.is_already_opened = True
+
+
   def show_mine(self):
     # Interrupt game and display "You Lost" message
-    self.cell_btn_object.configure(bg='red', text='Boom!')
-
-  def show_cell(self):
-    Cell.cell_count -= 1
-    self.cell_btn_object.configure(text=self.surrounding_cells_mines)
-    # Replace the text of 'cell count' label with the updated count
-
+    if not self.is_already_opened:
+      Cell.cell_count -= 1
+      self.cell_btn_object.configure(bg='red', text='Boom!')
+      if Cell.cell_count_label_object:
+        Cell.cell_count_label_object.configure(text=f"Cells Left: {Cell.cell_count}")
+      self.is_already_opened = True
 
   def right_click_actions(self, event):
     if self.is_mine:
