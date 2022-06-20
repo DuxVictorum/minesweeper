@@ -9,11 +9,11 @@ class Cell:
   
   def __init__(self, x, y, is_mine=False):
     self.is_mine = is_mine
+    self.is_already_opened = False
+    self.is_mine_candidate = False
+    self.cell_btn_object = None
     self.x = x
     self.y = y
-    self.is_already_opened = False
-    self.cell_btn_object = None
-
     # Append the object to the Cell.all list
     Cell.all.append(self)
 
@@ -83,16 +83,18 @@ class Cell:
 
   def show_mine(self):
     # Interrupt game and display "You Lost" message
-    if not self.is_already_opened:
-      Cell.cell_count -= 1
-      self.cell_btn_object.configure(bg='red', text='Boom!')
-      if Cell.cell_count_label_object:
-        Cell.cell_count_label_object.configure(text=f"Cells Left: {Cell.cell_count}")
-      self.is_already_opened = True
+    self.cell_btn_object.configure(bg='red', text='Boom!')
+    if Cell.cell_count_label_object:
+      Cell.cell_count_label_object.configure(text="Your head asplode!", font=("", 20))
+    self.is_already_opened = True
 
   def right_click_actions(self, event):
-    if self.is_mine:
-      self.show_mine()
+    if not self.is_mine_candidate:
+      self.cell_btn_object.configure(bg='orange')
+      self.is_mine_candidate = True
+    else:
+      self.cell_btn_object.configure(bg='SystemButtonFace')
+      self.is_mine_candidate = False
 
 
   # Seed the mines
