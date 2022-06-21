@@ -1,6 +1,8 @@
 from tkinter import Button, Label
 import random
 import settings
+import ctypes
+import time
 
 class Cell:
   all = []
@@ -84,9 +86,14 @@ class Cell:
   def show_mine(self):
     # Interrupt game and display "You Lost" message
     self.cell_btn_object.configure(bg='red', text='Boom!')
+    # time.sleep(2)
     if Cell.cell_count_label_object:
-      Cell.cell_count_label_object.configure(text="Your head asplode!", font=("", 20))
-    self.is_already_opened = True
+      Cell.cell_count_label_object.configure(text='Your\nhead\nasplode', font=("", 26))
+    if not self.is_already_opened:
+      Cell.cell_count -= 1
+      self.is_already_opened = True
+    ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine!', 'Game Over', 0)
+
 
   def right_click_actions(self, event):
     if not self.is_mine_candidate:
