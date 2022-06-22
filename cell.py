@@ -3,6 +3,7 @@ import random
 import settings
 import ctypes
 import time
+import sys
 
 class Cell:
   all = []
@@ -79,7 +80,8 @@ class Cell:
       self.cell_btn_object.configure(text=self.surrounding_cells_mines)
       if Cell.cell_count_label_object:
         Cell.cell_count_label_object.configure(text=f"Cells Left: {Cell.cell_count}")
-      # Mark the cell as opened
+      # Allow a previously marked mine candidate to be left-clicked to reveal the space
+      self.cell_btn_object.configure(bg='SystemButtonFace')
       self.is_already_opened = True
 
 
@@ -93,6 +95,7 @@ class Cell:
       Cell.cell_count -= 1
       self.is_already_opened = True
     ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine!', 'Game Over', 0)
+    sys.exit()
 
 
   def right_click_actions(self, event):
