@@ -42,6 +42,13 @@ class Cell:
         for cell_obj in self.surrounding_cells:
           cell_obj.show_cell()
       self.show_cell()
+      # If MINES_COUNT equals Cell.cell_count, show PLAYER WINS message
+      if Cell.cell_count == settings.MINES_COUNT:
+        ctypes.windll.user32.MessageBoxW(0, 'You Congratulations, you have won!', 'Game Over', 0)
+
+    # Cancel left / right click events if cell is already opened
+    self.cell_btn_object.unbind('<Button-1>')
+    self.cell_btn_object.unbind('<Button-3>')
 
   def get_cell_by_axis(self, x, y):
   # return a cell object based on its x and y values
@@ -95,7 +102,7 @@ class Cell:
       Cell.cell_count -= 1
       self.is_already_opened = True
     ctypes.windll.user32.MessageBoxW(0, 'You clicked on a mine!', 'Game Over', 0)
-    sys.exit()
+    # sys.exit()
 
 
   def right_click_actions(self, event):

@@ -16,6 +16,9 @@ root.title('Amazing Stuff!')
 top_frame = Frame(root, bg="grey10", width=width_pct(100), height=height_pct(25))
 top_frame.place(x=0, y=0)   # Start the top frame from the upper left corner
 
+game_title = Label(top_frame, bg='grey10', fg='white', text='Minesweeper Game', font=('', 48))
+game_title.place(x=width_pct(25), y=20)
+
 # Left sidebar
 left_frame = Frame(root, bg="grey10", width=width_pct(25), height=height_pct(75))
 left_frame.place(x=0, y=height_pct(25))
